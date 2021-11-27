@@ -33,7 +33,7 @@ def get_largest_component(image):
     output = np.asarray(labeled_array == max_label, np.uint8)
     return output
 
-@st.cache
+
 def singlePatientDetection(pName, baseline, params, organTarget):
 
     tDim = params['tDim'];
@@ -201,7 +201,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     st.warning('Step 9')        
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
-@st.cache
+
 def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
     tDim = params['tDim'];
@@ -441,7 +441,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 #     # funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
 
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, vol4Dpcs05
-@st.cache
+
 def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, organTarget, vol4Dpcs05):
 
     tDim = params['tDim'];
