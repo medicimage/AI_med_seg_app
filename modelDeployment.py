@@ -40,7 +40,7 @@ def runDeepSegmentationModel(organTarget, img):
 #             maskSegment = None
 #             plotMask = N2ne
 #         else:
-        maskSegment, plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs,
+        plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs,
                                                 zDimOri, 'Liver', None);
 
     if organTarget == 'Kidneys':
@@ -54,7 +54,7 @@ def runDeepSegmentationModel(organTarget, img):
             maskSegment = None
             plotMask = None
         else:
-            maskSegment, plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs,
+            plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs,
                                                 zDimOri, 'Kidneys', None);
 
     if organTarget == 'Pancreas':
@@ -69,7 +69,7 @@ def runDeepSegmentationModel(organTarget, img):
 #             maskSegment = None
 #             plotMask = None
 #         else:
-        maskSegment, plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect,
+        plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect,
                                                                                                boxDetect, kidneyNone,
                                                                                                vol4D0, vol4Dpcs,
                                                                                                zDimOri, 'Pancreas', vol4Dpcs05);
@@ -93,7 +93,7 @@ def runDeepSegmentationModel(organTarget, img):
         #     maskSegment = None
         #     plotMask = None
         # else:
-        maskSegment, plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect0, boxDetect0, kidneyNone0, vol4D0, vol4Dpcs,
+        plotMask = detectCroppedSeg3DKerasDR_predict_ha.singlePatientSegmentation(params, img, maskDetect0, boxDetect0, kidneyNone0, vol4D0, vol4Dpcs,
                                                 zDimOri, 'Psoas', None);
 
-    return maskSegment, plotMask
+    return plotMask
