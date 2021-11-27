@@ -173,7 +173,7 @@ if test ==1:
 
     #if sample or uploaded_nii_file or os.path.isdir(dirname):
     if uploaded_nii_file:
-#         if uploaded_nii_file:
+#         if sample:
 #             uploaded_nii_file = nib.load('./Data/Liver_extract.nii')
 #             # voxel size
 #             sx, sy, sz = uploaded_nii_file.header.get_zooms()
@@ -189,8 +189,7 @@ if test ==1:
 #                     st.text('This does not look like a DICOM folder!')
 
         if test:
-            print('true')
-        else:
+        #else:
             rr = uploaded_nii_file.read()
             bb = BytesIO(rr)
             fh = FileHolder(fileobj=bb)
@@ -265,9 +264,7 @@ if test ==1:
 #                 fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
 
         if test:
-            print('test') 
-
-        else:
+        #else:
             option = st.sidebar.radio('Select Organ to segment', ['None', 'Liver', 'Pancreas', 'Psoas', 'Kidneys'], index=0)
             if option == 'Liver':
                 ## start spinner
