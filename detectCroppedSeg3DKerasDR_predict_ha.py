@@ -216,18 +216,19 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     medianFind = np.median(im5);
     if medianFind == 0:
         medianFind = 1.0;
-
+    st.warning('stepP1.1')
     im5 = im5/medianFind;
 
     vol4D05 = np.copy(im5);
-
+    st.warning('stepP1.1.1')
     # perform PCA to numPC
     numPC05 = 5;  # 50
     pca05 = PCA(n_components=numPC05);
-
+    st.warning('stepP1.1.2')
     vol4Dvecs05 = np.reshape(vol4D05, (vol4D05.shape[0] * vol4D05.shape[1] * vol4D05.shape[2], vol4D05.shape[3]));
-
+    st.warning('stepP1.1.3')
     PCs05 = pca05.fit_transform(vol4Dvecs05);
+    st.warning('stepP1.1.4')
     vol4Dpcs05 = np.reshape(PCs05, (vol4D05.shape[0], vol4D05.shape[1], vol4D05.shape[2], numPC05));
     st.warning('stepP2')
     arr = vol4D00[:, :, :, 0]
