@@ -209,8 +209,6 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     PcUsed = params['PcUsed'];
     st.warning('stepP1')
     ##### extract input image data (vol4D00)
-    print('pname')
-    print(pnName)
     vol4D00, _, _, _, _ = funcs_ha_use.readData4(pName, reconMethod, 0, organTarget);
     zDimOri = vol4D00.shape[2];
     im5 = vol4D00[:, :, :, baseline:];
