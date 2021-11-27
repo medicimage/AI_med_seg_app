@@ -152,28 +152,28 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 
     aL=np.nonzero(KML==2);
     aR=np.nonzero(KMR==1);
-
+    st.warning('Step 8_1')
     if aL[0].size!=0:
         boxL=np.array([int((min(aL[0])+max(aL[0]))/2),int((min(aL[1])+max(aL[1]))/2),int((min(aL[2])+max(aL[2]))/2),\
           (max(aL[0])-min(aL[0])),(max(aL[1])-min(aL[1])),(max(aL[2])-min(aL[2]))])
     else:
         boxL=np.zeros((6,));
-        
+    st.warning('Step 8_2')   
     if aR[0].size!=0:
         boxR=np.array([int((min(aR[0])+max(aR[0]))/2),int((min(aR[1])+max(aR[1]))/2),int((min(aR[2])+max(aR[2]))/2),\
           (max(aR[0])-min(aR[0])),(max(aR[1])-min(aR[1])),(max(aR[2])-min(aR[2]))])
     else:
         boxR=np.zeros((6,));
-    
+    st.warning('Step 8_3')
     # bounding box for right (boxDetect[0,:]) and left kidney (boxDetect[1,:])
     boxDetect=np.vstack([np.array(boxR),np.array(boxL)]);
-
+    st.warning('Step 8_4')
     # identify whether right kidney exists
     # identify whether left kidney exists
     kidneyNone=np.nonzero(np.sum(boxDetect,axis=1)==0); #right/left
     if kidneyNone[0].size!=0:
         kidneyNone=np.nonzero(np.sum(boxDetect,axis=1)==0)[0][0]; #right/left
-    
+    st.warning('Step 8_5')
     # add extra margins to minimise impact of false-negative predictions
     KM = np.copy(maskDetect); KM[KM>1]=1;
     xSafeMagin=10;ySafeMagin=10;zSafeMagin=3;
@@ -181,13 +181,13 @@ def singlePatientDetection(pName, baseline, params, organTarget):
         boxDetect[:,[3,4,5]]=boxDetect[:,[3,4,5]]+[xSafeMagin,ySafeMagin,0];
     else:
         boxDetect[:,[3,4,5]]=boxDetect[:,[3,4,5]]+[xSafeMagin,ySafeMagin,zSafeMagin];
-
+    st.warning('Step 8_6')
 
     # predMaskR=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
     # predMaskL=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
     predMaskR=np.zeros((1,xDim,yDim,zDimm));
     predMaskL=np.zeros((1,xDim,yDim,zDimm));
-    
+    st.warning('Step 8_7')
     sc = 0;
     predMaskR[sc,:,:,:]=KMR; 
     predMaskL[sc,:,:,:]=KML;    
