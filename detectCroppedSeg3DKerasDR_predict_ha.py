@@ -33,6 +33,7 @@ def get_largest_component(image):
     output = np.asarray(labeled_array == max_label, np.uint8)
     return output
 
+@st.cache
 def singlePatientDetection(pName, baseline, params, organTarget):
 
     tDim = params['tDim'];
@@ -200,7 +201,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     st.warning('Step 9')        
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
-
+@st.cache
 def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
     tDim = params['tDim'];
@@ -440,7 +441,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 #     # funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
 
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, vol4Dpcs05
-
+@st.cache
 def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, organTarget, vol4Dpcs05):
 
     tDim = params['tDim'];
@@ -567,24 +568,24 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
                                 int(Box[1,2]-Box[1,5]/2):int(Box[1,2]+Box[1,5]/2)]=croppedData4DL;    
         
         
-    if np.sum(predMaskR) != 0:
-            predMaskL=morphology.remove_small_objects(predMaskL.astype(bool), min_size=256,in_place=True).astype(int);
-    if np.sum(predMaskL) != 0:
-            predMaskR=morphology.remove_small_objects(predMaskR.astype(bool), min_size=256,in_place=True).astype(int);
+#     if np.sum(predMaskR) != 0:
+#             predMaskL=morphology.remove_small_objects(predMaskL.astype(bool), min_size=256,in_place=True).astype(int);
+#     if np.sum(predMaskL) != 0:
+#             predMaskR=morphology.remove_small_objects(predMaskR.astype(bool), min_size=256,in_place=True).astype(int);
     
-    predMaskL2=np.copy(predMaskL);
+#     predMaskL2=np.copy(predMaskL);
         
-    Masks2Save={};
+#     Masks2Save={};
         
-    predMaskR2=zoom(predMaskR[sc,:,:,:],(1,1,1),order=0);
-    predMaskL2=zoom(predMaskL[sc,:,:,:],(1,1,1),order=0);
-    maskSegment = predMaskR2 + predMaskL2;
+#     predMaskR2=zoom(predMaskR[sc,:,:,:],(1,1,1),order=0);
+#     predMaskL2=zoom(predMaskL[sc,:,:,:],(1,1,1),order=0);
+#     maskSegment = predMaskR2 + predMaskL2;
         
-    Masks2Save['R']=np.copy(predMaskR2.astype(float));
-    Masks2Save['L']=np.copy(predMaskL2.astype(float));
+#     Masks2Save['R']=np.copy(predMaskR2.astype(float));
+#     Masks2Save['L']=np.copy(predMaskL2.astype(float));
 
-    # write kidney segmentation masks to file
-    #funcs_ha_use.writeMasks(pName,reconMethod,Masks2Save,1);
+#     # write kidney segmentation masks to file
+#     #funcs_ha_use.writeMasks(pName,reconMethod,Masks2Save,1);
     
-    return Masks2Save, maskSegment
+    return maskSegment
 
