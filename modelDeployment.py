@@ -4,8 +4,7 @@ import funcs_ha_use
 import numpy as np
 from streamlit import caching
 
-#@st.cache(suppress_st_warning=True)
-
+@st.cache
 def runDeepSegmentationModel(organTarget, img):
 
     # model parameters
