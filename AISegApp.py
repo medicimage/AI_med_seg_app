@@ -187,7 +187,8 @@ if test ==1:
 #                     sx, sy, sz = img.header.get_zooms()
 #                 except RuntimeError:
 #                     st.text('This does not look like a DICOM folder!')
-        if true:
+
+        if test:
             print('true')
         else:
             rr = uploaded_nii_file.read()
@@ -263,7 +264,7 @@ if test ==1:
 #                 fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Liver')
 #                 fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
 
-        if true:
+        if test:
             print('test') 
 
         else:
