@@ -22,7 +22,7 @@ timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
 
-mask = None
+#mask = None
 # upload file
 #@st.cache
 def loadData(dataAddress):
@@ -164,28 +164,31 @@ st.sidebar.image(image)
 #     #sample
 test = 1
 if test ==1:
-    sample = st.sidebar.checkbox('Load Sample - MRI Liver')
-    ## adding dir selector for dicom folder
-    dirname = dir_selector()
+#     sample = st.sidebar.checkbox('Load Sample - MRI Liver')
+#     ## adding dir selector for dicom folder
+#     dirname = dir_selector()
 
     ## adding uploader bar
     uploaded_nii_file = st.sidebar.file_uploader(" OR Select a NIfTI file:", type=['nii', 'img'], accept_multiple_files=False)
 
-    if sample or uploaded_nii_file or os.path.isdir(dirname):
-        if sample:
-            uploaded_nii_file = nib.load('./Data/Liver_extract.nii')
-            # voxel size
-            sx, sy, sz = uploaded_nii_file.header.get_zooms()
-            nii_data = uploaded_nii_file.get_data()
-            img_1 = np.asarray(nii_data)
-            img = Nifti1Image(img_1, affine=uploaded_nii_file.affine)
-        elif os.path.isdir(dirname):
-            with st.spinner('Wait for it. Loading DICOM files...'):
-                try:
-                    img = Dicom2Nifti.dicom2nii(dirname)
-                    sx, sy, sz = img.header.get_zooms()
-                except RuntimeError:
-                    st.text('This does not look like a DICOM folder!')
+    #if sample or uploaded_nii_file or os.path.isdir(dirname):
+    if uploaded_nii_file:
+#         if uploaded_nii_file:
+#             uploaded_nii_file = nib.load('./Data/Liver_extract.nii')
+#             # voxel size
+#             sx, sy, sz = uploaded_nii_file.header.get_zooms()
+#             nii_data = uploaded_nii_file.get_data()
+#             img_1 = np.asarray(nii_data)
+#             img = Nifti1Image(img_1, affine=uploaded_nii_file.affine)
+#         elif os.path.isdir(dirname):
+#             with st.spinner('Wait for it. Loading DICOM files...'):
+#                 try:
+#                     img = Dicom2Nifti.dicom2nii(dirname)
+#                     sx, sy, sz = img.header.get_zooms()
+#                 except RuntimeError:
+#                     st.text('This does not look like a DICOM folder!')
+        if true:
+            print('true')
         else:
             rr = uploaded_nii_file.read()
             bb = BytesIO(rr)
@@ -247,18 +250,21 @@ if test ==1:
             df = pd.DataFrame(data_all)
             st.dataframe(df.astype(str))
 
-        if sample:
-            option = st.sidebar.radio('Select Organ to segment', ['None', 'Liver'],
-                                      index=0)
-            with st.spinner('Wait for it...'):
-                # load segmentation model
-                # perform segmentation
-                maskSegment, mask = modelDeployment.runDeepSegmentationModel('Liver', img)
-                # plot segmentation mask
+#         if sample:
+#             option = st.sidebar.radio('Select Organ to segment', ['None', 'Liver'],
+#                                       index=0)
+#             with st.spinner('Wait for it...'):
+#                 # load segmentation model
+#                 # perform segmentation
+#                 maskSegment, mask = modelDeployment.runDeepSegmentationModel('Liver', img)
+#                 # plot segmentation mask
 
-                fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
-                fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Liver')
-                fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
+#                 fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
+#                 fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Liver')
+#                 fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
+
+        if true:
+            print('test') 
 
         else:
             option = st.sidebar.radio('Select Organ to segment', ['None', 'Liver', 'Pancreas', 'Psoas', 'Kidneys'], index=0)
@@ -286,30 +292,30 @@ if test ==1:
                     fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Pancreas')
                     fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Pancreas')
 
-            if option == 'Psoas':
-                ## start spinner
-                with st.spinner('Wait for it...'):
-                    # load segmentation model
-                    # perform segmentation
-                    maskSegment, mask = modelDeployment.runDeepSegmentationModel('Psoas', img)
+#             if option == 'Psoas':
+#                 ## start spinner
+#                 with st.spinner('Wait for it...'):
+#                     # load segmentation model
+#                     # perform segmentation
+#                     maskSegment, mask = modelDeployment.runDeepSegmentationModel('Psoas', img)
 
-                    # plot segmentation mask
-                    fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Psoas')
-                    fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Psoas')
-                    fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Psoas')
+#                     # plot segmentation mask
+#                     fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Psoas')
+#                     fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Psoas')
+#                     fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Psoas')
 
 
-            if option == 'Kidneys':
-                ## start spinner
-                with st.spinner('Wait for it...'):
-                    # load segmentation model
-                    # perform segmentation
-                    maskSegment, mask = modelDeployment.runDeepSegmentationModel('Kidneys', img)
-                    if (maskSegment != None):
-                        # plot segmentation mask
-                        fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Kidneys')
-                        fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Kidneys')
-                        fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Kidneys')
+#             if option == 'Kidneys':
+#                 ## start spinner
+#                 with st.spinner('Wait for it...'):
+#                     # load segmentation model
+#                     # perform segmentation
+#                     maskSegment, mask = modelDeployment.runDeepSegmentationModel('Kidneys', img)
+#                     if (maskSegment != None):
+#                         # plot segmentation mask
+#                         fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Kidneys')
+#                         fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Kidneys')
+#                         fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Kidneys')
 
 
     # plot volume
