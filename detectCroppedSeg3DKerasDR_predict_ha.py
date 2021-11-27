@@ -202,7 +202,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     
     #### write kidney masks to file ####    
     #funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
-     st.warning('Step 9')        
+    st.warning('Step 9')        
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
 
@@ -216,7 +216,6 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     ##### extract input image data (vol4D00)
     vol4D00, _, _, _, _ = funcs_ha_use.readData4(pName, reconMethod, 0, organTarget);
     zDimOri = vol4D00.shape[2];
-    st.warning('Step 10')
     im5 = vol4D00[:, :, :, baseline:];
 
     medianFind = np.median(im5);
@@ -458,7 +457,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
 
     if organTarget != 'Pancreas':
         vol4Dpcs05 = vol4Dpcs
-    
+    st.warning('Step 10')
     # crop out kidney images using bounding boxes
     exv = 0; #Jennifer Nowlan (+5, L)
     if kidneyNone!=0:
@@ -496,7 +495,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
         
     d=d/d.max()
     dpcs=dpcs/dpcs.max();
-    
+    st.warning('Step 11')
     sc=0; n_channels = tDim;
     DataCroppedTest=np.zeros((2,dx,dy,dz,n_channels));
     DataCroppedTest[2*sc:2*sc+2,:,:,:,:]=dpcs;
@@ -525,7 +524,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
         model.load_weights('./models/croppedSeg3D_96000_Psoas.h5');
     elif organTarget == 'Kidneys':
         model.load_weights('./models/croppedSeg3D_84000_Kidneys.h5')
-
+    st.warning('Step 12')
     # perform prediction
     cropped_mask_test = model.predict(DataCroppedTest, verbose=1)
     if cropped_mask_test.min()<0:
