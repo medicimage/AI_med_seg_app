@@ -62,7 +62,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 
     PCs=pca.fit_transform(vol4Dvecs);
     vol4Dpcs=np.reshape(PCs, (vol4D0.shape[0],vol4D0.shape[1],vol4D0.shape[2], numPC));
-        
+    st.warning('Step 5')
     dpcs = np.copy(vol4Dpcs);
     dpcs=dpcs/dpcs.max();
     da = dpcs.T;
@@ -93,7 +93,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     
     #load detection model weights
     selectedEpoch=params['selectedEpochDetect'];
-
+    st.warning('Step 6')
     # select organ to segment
     if organTarget == 'Liver':
         model.load_weights('./models/detect3D_30000_Liver.h5');
@@ -106,7 +106,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 
     #### perform prediction ####
     imgs_mask_test= model.predict(DataTest, verbose=1);
-    
+    st.warning('Step 7')
     multiHead = 0;
     if multiHead:
         labels_pred=np.argmax(imgs_mask_test[0], axis=4)
@@ -146,7 +146,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     print ('maskDetect:')
     print (maskDetect.shape)
 
-    
+    st.warning('Step 8')
     ### generate kidneys bounding box based on prediction
     boxDetect = [];
 
@@ -202,7 +202,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     
     #### write kidney masks to file ####    
     #funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
-            
+     st.warning('Step 9')        
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
 
@@ -216,7 +216,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     ##### extract input image data (vol4D00)
     vol4D00, _, _, _, _ = funcs_ha_use.readData4(pName, reconMethod, 0, organTarget);
     zDimOri = vol4D00.shape[2];
-
+    st.warning('Step 10')
     im5 = vol4D00[:, :, :, baseline:];
 
     medianFind = np.median(im5);
