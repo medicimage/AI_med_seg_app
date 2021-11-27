@@ -2,6 +2,7 @@ import detectCroppedSeg3DKerasDR_predict_ha
 import streamlit as st
 import funcs_ha_use
 import numpy as np
+from streamlit import caching
 
 @st.cache(suppress_st_warning=True)
 
@@ -27,6 +28,7 @@ def runDeepSegmentationModel(organTarget, img):
     baseline = '1';
     reconMethod = 'SCAN';
     if organTarget == 'Liver':
+        caching.clear_memo_cache()
         params['selectedEpochDetect'] = '30000';
         params['selectedEpochSegment'] = '31735';
         # call the model to detect and segment and return the mask
@@ -55,6 +57,7 @@ def runDeepSegmentationModel(organTarget, img):
                                                 zDimOri, 'Kidneys', None);
 
     if organTarget == 'Pancreas':
+        caching.clear_memo_cache()
         params['selectedEpochDetect'] = '3114';
         params['selectedEpochSegment'] = '84000';
 
