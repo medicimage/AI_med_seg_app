@@ -183,25 +183,25 @@ def singlePatientDetection(pName, baseline, params, organTarget):
         boxDetect[:,[3,4,5]]=boxDetect[:,[3,4,5]]+[xSafeMagin,ySafeMagin,zSafeMagin];
     st.warning('Step 8_6')
 
-    # predMaskR=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
-    # predMaskL=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
-    predMaskR=np.zeros((1,xDim,yDim,zDimm));
-    predMaskL=np.zeros((1,xDim,yDim,zDimm));
-    st.warning('Step 8_7')
-    sc = 0;
-    predMaskR[sc,:,:,:]=KMR; 
-    predMaskL[sc,:,:,:]=KML;    
+#     # predMaskR=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
+#     # predMaskL=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
+#     predMaskR=np.zeros((1,xDim,yDim,zDimm));
+#     predMaskL=np.zeros((1,xDim,yDim,zDimm));
+#     st.warning('Step 8_7')
+#     sc = 0;
+#     predMaskR[sc,:,:,:]=KMR; 
+#     predMaskL[sc,:,:,:]=KML;    
 
-    Masks2Save={};
+#     Masks2Save={};
 
-    predMaskR2=zoom(predMaskR[sc,:,:,:],(1,1,1),order=0);
-    predMaskL2=zoom(predMaskL[sc,:,:,:],(1,1,1),order=0);
+#     predMaskR2=zoom(predMaskR[sc,:,:,:],(1,1,1),order=0);
+#     predMaskL2=zoom(predMaskL[sc,:,:,:],(1,1,1),order=0);
     
-    Masks2Save['R']=np.copy(predMaskR2.astype(float));
-    Masks2Save['L']=np.copy(predMaskL2.astype(float));
+#     Masks2Save['R']=np.copy(predMaskR2.astype(float));
+#     Masks2Save['L']=np.copy(predMaskL2.astype(float));
     
-    #### write kidney masks to file ####    
-    #funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
+#     #### write kidney masks to file ####    
+#     #funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
     st.warning('Step 9')        
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
@@ -419,29 +419,29 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
     boxDetect = boxDetect.astype('int')
 
-    KM = np.copy(maskDetect);
-    KM[KM > 1] = 1;
-    xSafeMagin = 15;
-    ySafeMagin = 15;
-    zSafeMagin = 3;
+#     KM = np.copy(maskDetect);
+#     KM[KM > 1] = 1;
+#     xSafeMagin = 15;
+#     ySafeMagin = 15;
+#     zSafeMagin = 3;
 
-    boxDetect[1, [3, 4, 5]] = boxDetect[1, [3, 4, 5]] + [xSafeMagin, ySafeMagin, zSafeMagin];
+#     boxDetect[1, [3, 4, 5]] = boxDetect[1, [3, 4, 5]] + [xSafeMagin, ySafeMagin, zSafeMagin];
 
-    predMaskR = np.zeros((1, xDim, yDim, zDimm));
-    predMaskL = np.zeros((1, xDim, yDim, zDimm));
+#     predMaskR = np.zeros((1, xDim, yDim, zDimm));
+#     predMaskL = np.zeros((1, xDim, yDim, zDimm));
 
-    sc = 0;
-    predMaskR[sc, :, :, :] = KMR;
-    predMaskL[sc, :, :, :] = KML;
+#     sc = 0;
+#     predMaskR[sc, :, :, :] = KMR;
+#     predMaskL[sc, :, :, :] = KML;
 
-    Masks2Save = {};
+#     Masks2Save = {};
 
-    predMaskR2 = zoom(predMaskR[sc, :, :, :], (1, 1, 1), order=0);
-    predMaskL2 = zoom(predMaskL[sc, :, :, :], (1, 1, 1), order=0);
+#     predMaskR2 = zoom(predMaskR[sc, :, :, :], (1, 1, 1), order=0);
+#     predMaskL2 = zoom(predMaskL[sc, :, :, :], (1, 1, 1), order=0);
 
 
-    #### write kidney masks to file ####
-    # funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
+#     #### write kidney masks to file ####
+#     # funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
 
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, vol4Dpcs05
 
