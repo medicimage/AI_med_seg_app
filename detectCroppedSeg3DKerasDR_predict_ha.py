@@ -42,14 +42,10 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     tDim = params['tDim'];
     deepRed = params['deepReduction'];
     PcUsed = params['PcUsed'];
-    
-    st.warning('Step 3')
 
     ##### extract input image data (vol4D00)
     vol4D00,_,_,_,_ = funcs_ha_use.readData4(pName,reconMethod,0,organTarget);
     zDimOri = vol4D00.shape[2];
-    
-    st.warning('Step 4')
     
     # start from baseline      
     im = vol4D00[:,:,:,baseline:];
@@ -66,7 +62,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     PCs=pca.fit_transform(vol4Dvecs);
     vol4Dpcs=np.reshape(PCs, (vol4D0.shape[0],vol4D0.shape[1],vol4D0.shape[2], numPC));
     del PCs
-    st.warning('Step 5')
+    
     dpcs = np.copy(vol4Dpcs);
     dpcs=dpcs/dpcs.max();
     da = dpcs.T;
@@ -96,7 +92,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 
     #load detection model weights
     selectedEpoch=params['selectedEpochDetect'];
-    st.warning('Step 4')
+
     # select organ to segment
     K.clear_session()
     if organTarget == 'Liver':
@@ -127,7 +123,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     
     right = labels_pred[si,:,:,:].T==1;
     right = right.astype(int);
-    st.warning('step p5')
+    
     ####### resample to original input image size dimensions
     
     # xyDimOri = 224;
@@ -156,28 +152,28 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 
     aL=np.nonzero(KML==2);
     aR=np.nonzero(KMR==1);
-    st.warning('Step 8_1')
+    
     if aL[0].size!=0:
         boxL=np.array([int((min(aL[0])+max(aL[0]))/2),int((min(aL[1])+max(aL[1]))/2),int((min(aL[2])+max(aL[2]))/2),\
           (max(aL[0])-min(aL[0])),(max(aL[1])-min(aL[1])),(max(aL[2])-min(aL[2]))])
     else:
         boxL=np.zeros((6,));
-    st.warning('Step 8_2')   
+     
     if aR[0].size!=0:
         boxR=np.array([int((min(aR[0])+max(aR[0]))/2),int((min(aR[1])+max(aR[1]))/2),int((min(aR[2])+max(aR[2]))/2),\
           (max(aR[0])-min(aR[0])),(max(aR[1])-min(aR[1])),(max(aR[2])-min(aR[2]))])
     else:
         boxR=np.zeros((6,));
-    st.warning('Step 8_3')
+   
     # bounding box for right (boxDetect[0,:]) and left kidney (boxDetect[1,:])
     boxDetect=np.vstack([np.array(boxR),np.array(boxL)]);
-    st.warning('Step 8_4')
+    
     # identify whether right kidney exists
     # identify whether left kidney exists
     kidneyNone=np.nonzero(np.sum(boxDetect,axis=1)==0); #right/left
     if kidneyNone[0].size!=0:
         kidneyNone=np.nonzero(np.sum(boxDetect,axis=1)==0)[0][0]; #right/left
-    st.warning('Step 8_5')
+    
     # add extra margins to minimise impact of false-negative predictions
     KM = np.copy(maskDetect); KM[KM>1]=1;
     xSafeMagin=10;ySafeMagin=10;zSafeMagin=3;
@@ -185,28 +181,6 @@ def singlePatientDetection(pName, baseline, params, organTarget):
         boxDetect[:,[3,4,5]]=boxDetect[:,[3,4,5]]+[xSafeMagin,ySafeMagin,0];
     else:
         boxDetect[:,[3,4,5]]=boxDetect[:,[3,4,5]]+[xSafeMagin,ySafeMagin,zSafeMagin];
-    st.warning('Step p7')
-
-#     # predMaskR=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
-#     # predMaskL=np.zeros((1,xyDimOri,xyDimOri,zDimOri));
-#     predMaskR=np.zeros((1,xDim,yDim,zDimm));
-#     predMaskL=np.zeros((1,xDim,yDim,zDimm));
-#     st.warning('Step 8_7')
-#     sc = 0;
-#     predMaskR[sc,:,:,:]=KMR; 
-#     predMaskL[sc,:,:,:]=KML;    
-
-#     Masks2Save={};
-
-#     predMaskR2=zoom(predMaskR[sc,:,:,:],(1,1,1),order=0);
-#     predMaskL2=zoom(predMaskL[sc,:,:,:],(1,1,1),order=0);
-    
-#     Masks2Save['R']=np.copy(predMaskR2.astype(float));
-#     Masks2Save['L']=np.copy(predMaskL2.astype(float));
-    
-#     #### write kidney masks to file ####    
-#     #funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
-    st.warning('Step 9') 
     
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
@@ -217,32 +191,32 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     tDim = 1
     deepRed = params['deepReduction'];
     PcUsed = params['PcUsed'];
-    st.warning('stepP1')
+    
     ##### extract input image data (vol4D00)
     vol4D00, _, _, _, _ = funcs_ha_use.readData4(pName, reconMethod, 0, organTarget);
     zDimOri = vol4D00.shape[2];
     im5 = vol4D00[:, :, :, baseline:];
-    st.warning('stepP1.1')
+    
     medianFind = np.median(im5);
     if medianFind == 0:
         medianFind = 1.0;
-    st.warning('stepP1.1')
+   
     im5 = im5/medianFind;
 
     vol4D05 = np.copy(im5);
-    st.warning('stepP1.1.1')
+    
     # perform PCA to numPC
     numPC05 = 5;  # 50
     pca05 = PCA(n_components=numPC05);
-    st.warning('stepP1.1.2')
+    
     vol4Dvecs05 = np.reshape(vol4D05, (vol4D05.shape[0] * vol4D05.shape[1] * vol4D05.shape[2], vol4D05.shape[3]));
-    st.warning('stepP1.1.3')
+    
     
     PCs05 = pca05.fit_transform(vol4Dvecs05);
-    st.warning('stepP1.1.4')
+    
     vol4Dpcs05 = np.reshape(PCs05, (vol4D05.shape[0], vol4D05.shape[1], vol4D05.shape[2], numPC05));
     del PCs05
-    st.warning('stepP2')
+    
     arr = vol4D00[:, :, :, 0]
     im = np.expand_dims(arr, 3)
 
@@ -302,7 +276,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
         model.load_weights('./models/detect3D_3114_Pancreas.h5')
     elif organTarget == 'Psoas':
         model.load_weights('./models/detect3D_32755_Psoas.h5')
-    st.warning('stepP3')
+    
 
     #### perform prediction ####
     imgs_mask_test = model.predict(DataTest, verbose=1);
@@ -331,7 +305,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     zDimm = vol4D00.shape[2];
     xDim = vol4D00.shape[0];
     yDim = vol4D00.shape[1];
-    st.warning('stepP4')
+    
 
     KMR = zoom(right, (xDim / np.size(right, 0), yDim / np.size(right, 1), zDimm / np.size(right, 2)), order=0);
     KML = zoom(left, (xDim / np.size(left, 0), yDim / np.size(left, 1), zDimm / np.size(left, 2)), order=0);
@@ -365,7 +339,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
     # full kidney mask
     maskDetect = KMR + KML;
-    st.warning('stepP5')
+   
     ### generate kidneys bounding box based on prediction
     boxDetect = [];
 
@@ -394,7 +368,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     kidneyNone = np.nonzero(np.sum(boxDetect, axis=1) == 0);  # right/left
     if kidneyNone[0].size != 0:
         kidneyNone = np.nonzero(np.sum(boxDetect, axis=1) == 0)[0][0];  # right/left
-    st.warning('stepP6')
+   
     # add extra margins to minimise impact of false-negative predictions
     KM = np.copy(maskDetect);
     KM[KM > 1] = 1;
@@ -426,32 +400,8 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     boxDetect[:, 3] = chooseCast[3] * boxDetect[:, 3]
     boxDetect[:, 4] = chooseCast[4] * boxDetect[:, 4]
     boxDetect[:, 5] = chooseCast[5] * boxDetect[:, 5]
-    st.warning('stepP7')
+   
     boxDetect = boxDetect.astype('int')
-
-#     KM = np.copy(maskDetect);
-#     KM[KM > 1] = 1;
-#     xSafeMagin = 15;
-#     ySafeMagin = 15;
-#     zSafeMagin = 3;
-
-#     boxDetect[1, [3, 4, 5]] = boxDetect[1, [3, 4, 5]] + [xSafeMagin, ySafeMagin, zSafeMagin];
-
-#     predMaskR = np.zeros((1, xDim, yDim, zDimm));
-#     predMaskL = np.zeros((1, xDim, yDim, zDimm));
-
-#     sc = 0;
-#     predMaskR[sc, :, :, :] = KMR;
-#     predMaskL[sc, :, :, :] = KML;
-
-#     Masks2Save = {};
-
-#     predMaskR2 = zoom(predMaskR[sc, :, :, :], (1, 1, 1), order=0);
-#     predMaskL2 = zoom(predMaskL[sc, :, :, :], (1, 1, 1), order=0);
-
-
-#     #### write kidney masks to file ####
-#     # funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
     
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, vol4Dpcs05
 
@@ -467,7 +417,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
 
     if organTarget != 'Pancreas':
         vol4Dpcs05 = vol4Dpcs
-    st.warning('Step 10')
+  
     # crop out kidney images using bounding boxes
     exv = 0; #Jennifer Nowlan (+5, L)
     if kidneyNone!=0:
@@ -505,7 +455,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
         
     d=d/d.max()
     dpcs=dpcs/dpcs.max();
-    st.warning('Step 11')
+    
     sc=0; n_channels = tDim;
     DataCroppedTest=np.zeros((2,dx,dy,dz,n_channels));
     DataCroppedTest[2*sc:2*sc+2,:,:,:,:]=dpcs;
@@ -534,7 +484,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
         model.load_weights('./models/croppedSeg3D_96000_Psoas.h5');
     elif organTarget == 'Kidneys':
         model.load_weights('./models/croppedSeg3D_84000_Kidneys.h5')
-    st.warning('Step 12')
+  
     # perform prediction
     cropped_mask_test = model.predict(DataCroppedTest, verbose=1)
     del model
@@ -596,12 +546,6 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
     predMaskR2=zoom(predMaskR[sc,:,:,:],(1,1,1),order=0);
     predMaskL2=zoom(predMaskL[sc,:,:,:],(1,1,1),order=0);
     maskSegment = predMaskR2 + predMaskL2;
-        
-#     Masks2Save['R']=np.copy(predMaskR2.astype(float));
-#     Masks2Save['L']=np.copy(predMaskL2.astype(float));
-
-#     # write kidney segmentation masks to file
-#     #funcs_ha_use.writeMasks(pName,reconMethod,Masks2Save,1);
    
     return maskSegment
 
