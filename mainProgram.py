@@ -200,8 +200,7 @@ if choice == "Prototype":
 
         # plot the slider
         n_slices1 = img_vol.shape[2]
-        #slice_i1 = col1.slider('Slice - Axial', 0, n_slices1, int(n_slices1 / 2))
-        slice_i1 = col1.slider('Slice - Axial', 0, n_slices1, 112)
+        slice_i1 = col1.slider('Slice - Axial', 0, n_slices1, int(n_slices1 / 2))
 
         n_slices2 = img_vol.shape[0]
         slice_i2 = col2.slider('Slice - Coronal', 0, n_slices2, int(n_slices2 / 2))
