@@ -201,7 +201,7 @@ if choice == "Prototype":
         # plot the slider
         n_slices1 = img_vol.shape[2]
         #slice_i1 = col1.slider('Slice - Axial', 0, n_slices1, int(n_slices1 / 2))
-        slice_i1 = 112
+        slice_i1 = col1.slider('Slice - Axial', 0, n_slices1, 112)
 
         n_slices2 = img_vol.shape[0]
         slice_i2 = col2.slider('Slice - Coronal', 0, n_slices2, int(n_slices2 / 2))
@@ -317,45 +317,45 @@ if choice == "Prototype":
         plot = col2.pyplot(fig1)
         plot = col3.pyplot(fig2)
 
-#         visual3D = st.sidebar.checkbox('3D Visualisation')
+        visual3D = st.sidebar.checkbox('3D Visualisation')
 
-#         with st.spinner('Wait for 3D visualisation...'):
+        with st.spinner('Wait for 3D visualisation...'):
 
-#             if visual3D:
-#                 if mask is not None:
-#                     verts, faces, normals, values = measure.marching_cubes_lewiner(mask, 0.0, allow_degenerate=False)
+            if visual3D:
+                if mask is not None:
+                    verts, faces, normals, values = measure.marching_cubes_lewiner(mask, 0.0, allow_degenerate=False)
 
-#                     fig4 = go.Figure(data=[go.Mesh3d(x=verts[:,0], y=verts[:,1], z=verts[:,2], i=faces[:,0], j=faces[:,1], k=faces[:,2],
-#                                                 opacity=0.6,
-#                                                 autocolorscale=True)])
-#                     col4.plotly_chart(fig4)
-#                 else:
-#                     st.warning ('No segmentation - Select Organ to segment to see the 3D visualisation')
+                    fig4 = go.Figure(data=[go.Mesh3d(x=verts[:,0], y=verts[:,1], z=verts[:,2], i=faces[:,0], j=faces[:,1], k=faces[:,2],
+                                                opacity=0.6,
+                                                autocolorscale=True)])
+                    col4.plotly_chart(fig4)
+                else:
+                    st.warning ('No segmentation - Select Organ to segment to see the 3D visualisation')
 
-#             morphF = st.sidebar.checkbox('Morphological features')
-#             if morphF:
-#                 if mask is not None and visual3D:
-#                     ## compute volume
-#                     # voxel size
-#                     vox_volume = sx * sy * sz
-#                     volume = np.count_nonzero(mask) * vox_volume * pow(10, -3)
+            morphF = st.sidebar.checkbox('Morphological features')
+            if morphF:
+                if mask is not None and visual3D:
+                    ## compute volume
+                    # voxel size
+                    vox_volume = sx * sy * sz
+                    volume = np.count_nonzero(mask) * vox_volume * pow(10, -3)
 
-#                     with st.spinner('Wait for it...'):
-#                         ## compute curvature
-#                         mesh = trimesh.Trimesh(verts, faces)
-#                         curvatures = trimesh.curvature.discrete_mean_curvature_measure(mesh, verts, 10.0 / (4 * np.pi))
-#                         meanCurv = abs(np.mean(curvatures))
-#                     # show in a table
-#                         d = {'Volume': [volume], 'Curvature': [meanCurv]}
-#                         #print (VC)
-#                         df_VC = pd.DataFrame(d)
-#                         st.subheader('Morphological measures')
-#                         st.table(df_VC)
-#                         download = FileDownloader(df_VC.to_csv(), file_ext='csv').download()
+                    with st.spinner('Wait for it...'):
+                        ## compute curvature
+                        mesh = trimesh.Trimesh(verts, faces)
+                        curvatures = trimesh.curvature.discrete_mean_curvature_measure(mesh, verts, 10.0 / (4 * np.pi))
+                        meanCurv = abs(np.mean(curvatures))
+                    # show in a table
+                        d = {'Volume': [volume], 'Curvature': [meanCurv]}
+                        #print (VC)
+                        df_VC = pd.DataFrame(d)
+                        st.subheader('Morphological measures')
+                        st.table(df_VC)
+                        download = FileDownloader(df_VC.to_csv(), file_ext='csv').download()
 
 
-#                 else:
-#                     st.warning('No segmentation - Select Organ to segment and perform 3D visualisation to get morphological measures')
+                else:
+                    st.warning('No segmentation - Select Organ to segment and perform 3D visualisation to get morphological measures')
 
 
 
