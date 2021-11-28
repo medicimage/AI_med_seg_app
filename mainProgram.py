@@ -189,7 +189,7 @@ if choice == "Prototype":
             bb = BytesIO(rr)
             fh = FileHolder(fileobj=bb)
             img = Nifti1Image.from_file_map({'header': fh, 'image': fh})
-            #sx, sy, sz = img.header.get_zooms()
+            sx, sy, sz = img.header.get_zooms()
 
         img_vol = loadData(img)
         ## set title main window
