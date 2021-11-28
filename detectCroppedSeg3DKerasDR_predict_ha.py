@@ -9,7 +9,7 @@ from networks_ah import get_unet2, get_rbunet, get_meshNet, get_denseNet, calcul
 from networks_ah import get_denseNet103, get_unet3
 import streamlit as st
 from keras import backend as K
-import gb
+import gc
 
 
 reconMethod = 'SCAN';
