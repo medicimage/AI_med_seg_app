@@ -236,10 +236,11 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     st.warning('stepP1.1.2')
     vol4Dvecs05 = np.reshape(vol4D05, (vol4D05.shape[0] * vol4D05.shape[1] * vol4D05.shape[2], vol4D05.shape[3]));
     st.warning('stepP1.1.3')
-    del PCs
+    
     PCs05 = pca05.fit_transform(vol4Dvecs05);
     st.warning('stepP1.1.4')
     vol4Dpcs05 = np.reshape(PCs05, (vol4D05.shape[0], vol4D05.shape[1], vol4D05.shape[2], numPC05));
+    del PCs05
     st.warning('stepP2')
     arr = vol4D00[:, :, :, 0]
     im = np.expand_dims(arr, 3)
