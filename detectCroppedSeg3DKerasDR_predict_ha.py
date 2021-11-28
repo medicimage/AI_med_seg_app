@@ -513,7 +513,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
     #choose relevant segmentation model
     n_classes = 2;
     networkToUse = params['networkToUseSegment'];
-
+    K.clear_session()
     if networkToUse == 'tNet':
         model = get_denseNet103(dx,dz,n_channels,n_classes,deepRed,0);
     elif networkToUse == 'rbUnet':
@@ -591,7 +591,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
     
     predMaskL2=np.copy(predMaskL);
         
-    Masks2Save={};
+    #Masks2Save={};
         
     predMaskR2=zoom(predMaskR[sc,:,:,:],(1,1,1),order=0);
     predMaskL2=zoom(predMaskL[sc,:,:,:],(1,1,1),order=0);
