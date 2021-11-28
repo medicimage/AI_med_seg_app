@@ -110,6 +110,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 
     #### perform prediction ####
     imgs_mask_test= model.predict(DataTest, verbose=1);
+    del model
     K.clear_session()
     gc.collect()
     multiHead = 0;
@@ -305,6 +306,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
     #### perform prediction ####
     imgs_mask_test = model.predict(DataTest, verbose=1);
+    del model
     K.clear_session()
     gc.collect()
     multiHead = 0;
@@ -535,6 +537,7 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
     st.warning('Step 12')
     # perform prediction
     cropped_mask_test = model.predict(DataCroppedTest, verbose=1)
+    del model
     K.clear_session()
     gc.collect()
     if cropped_mask_test.min()<0:
