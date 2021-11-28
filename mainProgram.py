@@ -146,7 +146,7 @@ if choice == 'Publications and Code':
     "https://github.com/med-seg/kidney-mc"
     " "
     "The code for the web-application is available in GitHub at the following link:"
-    "Add link...."
+    "https://github.com/medicimage/AI_med_seg_app"
 if choice == 'About':
     st.header("About the project")
     "The project was part of a project funded by the Royal Academy of Engineering - Leverhume Trust Research Fellowship "\
