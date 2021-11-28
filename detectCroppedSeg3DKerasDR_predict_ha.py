@@ -65,6 +65,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     vol4Dvecs = np.reshape(vol4D0, (vol4D0.shape[0] * vol4D0.shape[1] * vol4D0.shape[2], vol4D0.shape[3]));
     PCs=pca.fit_transform(vol4Dvecs);
     vol4Dpcs=np.reshape(PCs, (vol4D0.shape[0],vol4D0.shape[1],vol4D0.shape[2], numPC));
+    del PCs
     st.warning('Step 5')
     dpcs = np.copy(vol4Dpcs);
     dpcs=dpcs/dpcs.max();
@@ -97,6 +98,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     selectedEpoch=params['selectedEpochDetect'];
     st.warning('Step 4')
     # select organ to segment
+    K.clear_session()
     if organTarget == 'Liver':
         model.load_weights('./models/detect3D_30000_Liver.h5');
     elif organTarget == 'Pancreas':
@@ -234,6 +236,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     st.warning('stepP1.1.2')
     vol4Dvecs05 = np.reshape(vol4D05, (vol4D05.shape[0] * vol4D05.shape[1] * vol4D05.shape[2], vol4D05.shape[3]));
     st.warning('stepP1.1.3')
+    del PCs
     PCs05 = pca05.fit_transform(vol4Dvecs05);
     st.warning('stepP1.1.4')
     vol4Dpcs05 = np.reshape(PCs05, (vol4D05.shape[0], vol4D05.shape[1], vol4D05.shape[2], numPC05));
@@ -275,7 +278,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
     # initialise detection model
     n_channels = tDim;
     n_classes = 3;
-
+    K.clear_session()
     # choose relevant detection model
     networkToUse = params['networkToUseDetect'];
     if networkToUse == 'rbUnet':
