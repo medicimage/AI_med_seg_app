@@ -25,7 +25,7 @@ timestr = time.strftime("%Y%m%d-%H%M%S")
 
 #mask = None
 # upload file
-#@st.cache
+@st.cache
 def loadData(dataAddress):
     img_vol = funcs_ha_use.readVolume4(dataAddress)
     return img_vol
