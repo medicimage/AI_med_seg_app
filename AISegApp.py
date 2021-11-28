@@ -323,6 +323,7 @@ if test ==1:
         plot = col1.pyplot(fig)
         plot = col2.pyplot(fig1)
         plot = col3.pyplot(fig2)
+        del mask
 
 #         visual3D = st.sidebar.checkbox('3D Visualisation')
 
