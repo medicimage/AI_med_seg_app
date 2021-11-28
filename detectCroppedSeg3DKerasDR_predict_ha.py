@@ -9,6 +9,7 @@ from networks_ah import get_unet2, get_rbunet, get_meshNet, get_denseNet, calcul
 from networks_ah import get_denseNet103, get_unet3
 import streamlit as st
 from keras import backend as K
+import gb
 
 
 reconMethod = 'SCAN';
@@ -107,6 +108,8 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 
     #### perform prediction ####
     imgs_mask_test= model.predict(DataTest, verbose=1);
+    K.clear_session()
+    gc.collect()
     multiHead = 0;
     if multiHead:
         labels_pred=np.argmax(imgs_mask_test[0], axis=4)
@@ -201,7 +204,7 @@ def singlePatientDetection(pName, baseline, params, organTarget):
 #     #### write kidney masks to file ####    
 #     #funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
     st.warning('Step 9') 
-    K.clear_session()
+    
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
 
@@ -298,7 +301,8 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
     #### perform prediction ####
     imgs_mask_test = model.predict(DataTest, verbose=1);
-
+    K.clear_session()
+    gc.collect()
     multiHead = 0;
     if multiHead:
         labels_pred = np.argmax(imgs_mask_test[0], axis=4)
@@ -442,7 +446,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
 #     #### write kidney masks to file ####
 #     # funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
-    K.clear_session()
+    
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, vol4Dpcs05
 
 def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, organTarget, vol4Dpcs05):
@@ -527,6 +531,8 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
     st.warning('Step 12')
     # perform prediction
     cropped_mask_test = model.predict(DataCroppedTest, verbose=1)
+    K.clear_session()
+    gc.collect()
     if cropped_mask_test.min()<0:
         cropped_mask_test=abs(cropped_mask_test.min())+cropped_mask_test;
         
@@ -589,6 +595,6 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
 
 #     # write kidney segmentation masks to file
 #     #funcs_ha_use.writeMasks(pName,reconMethod,Masks2Save,1);
-    K.clear_session()
+   
     return maskSegment
 
