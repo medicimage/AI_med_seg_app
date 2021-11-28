@@ -189,7 +189,7 @@ if choice == "Prototype":
             bb = BytesIO(rr)
             fh = FileHolder(fileobj=bb)
             img = Nifti1Image.from_file_map({'header': fh, 'image': fh})
-            sx, sy, sz = img.header.get_zooms()
+            #sx, sy, sz = img.header.get_zooms()
 
         img_vol = loadData(img)
         ## set title main window
@@ -255,9 +255,9 @@ if choice == "Prototype":
                     mask = modelDeployment.runDeepSegmentationModel('Liver', img)
                     # plot segmentation mask
 
-                   fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
-                   fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Liver')
-                   fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
+                    fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
+                    fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Liver')
+                    fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
 
         else:
             option = st.sidebar.radio('Select Organ to segment', ['None', 'Liver', 'Pancreas', 'Psoas', 'Kidneys'], index=0)
