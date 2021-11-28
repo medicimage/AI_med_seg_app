@@ -251,7 +251,7 @@ if choice == "Prototype":
             with st.spinner('Wait for it...'):
                 # load segmentation model
                 # perform segmentation
-                maskSegment, mask = modelDeployment.runDeepSegmentationModel('Liver', img)
+                mask = modelDeployment.runDeepSegmentationModel('Liver', img)
                 # plot segmentation mask
 
                 fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
@@ -265,7 +265,7 @@ if choice == "Prototype":
                 with st.spinner('Wait for it...'):
                     # load segmentation model
                     # perform segmentation
-                    maskSegment, mask = modelDeployment.runDeepSegmentationModel('Liver', img)
+                    mask = modelDeployment.runDeepSegmentationModel('Liver', img)
                     # plot segmentation mask
 
                     fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
@@ -278,7 +278,7 @@ if choice == "Prototype":
                 with st.spinner('Wait for it...'):
                     # load segmentation model
                     # perform segmentation
-                    maskSegment, mask = modelDeployment.runDeepSegmentationModel('Pancreas', img)
+                    mask = modelDeployment.runDeepSegmentationModel('Pancreas', img)
                     # plot segmentation mask
                     fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Pancreas')
                     fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Pancreas')
@@ -289,7 +289,7 @@ if choice == "Prototype":
                 with st.spinner('Wait for it...'):
                     # load segmentation model
                     # perform segmentation
-                    maskSegment, mask = modelDeployment.runDeepSegmentationModel('Psoas', img)
+                    mask = modelDeployment.runDeepSegmentationModel('Psoas', img)
 
                     # plot segmentation mask
                     fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Psoas')
@@ -302,7 +302,7 @@ if choice == "Prototype":
                 with st.spinner('Wait for it...'):
                     # load segmentation model
                     # perform segmentation
-                    maskSegment, mask = modelDeployment.runDeepSegmentationModel('Kidneys', img)
+                    mask = modelDeployment.runDeepSegmentationModel('Kidneys', img)
                     if (maskSegment != None):
                         # plot segmentation mask
                         fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Kidneys')
