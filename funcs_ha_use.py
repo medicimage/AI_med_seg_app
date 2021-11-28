@@ -34,8 +34,8 @@ def readData4(img, reconMethod, genBoundBox, targetOrgan):
             im2[:,:,:,ix]=im[:,:,:]
 
         if targetOrgan == 'Psoas':
-            maskAddressL = './models/1qfr4i2cwCoGRrC2RDIKRu_LabelLeft.nii'
-            maskAddressR = './models/1qfr4i2cwCoGRrC2RDIKRu_LabelRight.nii'
+            maskAddressL = './models/1qfr4i2cwCoGRrC2RDIKRu_LabelLeft__extract.nii'
+            maskAddressR = './models/1qfr4i2cwCoGRrC2RDIKRu_LabelRight__extract.nii'
         elif targetOrgan == 'Pancreas':
             maskAddressL = ''
             maskAddressR = ''
