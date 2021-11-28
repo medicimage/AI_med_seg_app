@@ -8,6 +8,8 @@ from skimage import morphology
 from networks_ah import get_unet2, get_rbunet, get_meshNet, get_denseNet, calculatedPerfMeasures
 from networks_ah import get_denseNet103, get_unet3
 import streamlit as st
+from keras import backend as K
+
 
 reconMethod = 'SCAN';
 
@@ -198,7 +200,8 @@ def singlePatientDetection(pName, baseline, params, organTarget):
     
 #     #### write kidney masks to file ####    
 #     #funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
-    st.warning('Step 9')        
+    st.warning('Step 9') 
+    K.clear_session()
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri
 
 
@@ -439,7 +442,7 @@ def singlePatientDetectionPancreas(pName, baseline, params, organTarget):
 
 #     #### write kidney masks to file ####
 #     # funcs_ha_use.writeMasksDetect(pName,reconMethod,Masks2Save,1);
-
+    K.clear_session()
     return maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, vol4Dpcs05
 
 def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, vol4D0, vol4Dpcs, zDimOri, organTarget, vol4Dpcs05):
@@ -586,6 +589,6 @@ def singlePatientSegmentation(params, pName, maskDetect, boxDetect, kidneyNone, 
 
 #     # write kidney segmentation masks to file
 #     #funcs_ha_use.writeMasks(pName,reconMethod,Masks2Save,1);
-    
+    K.clear_session()
     return maskSegment
 
