@@ -17,7 +17,7 @@ import Dicom2Nifti
 import trimesh
 import base64
 import gc
-
+from streamlit import caching
 import time
 timestr = time.strftime("%Y%m%d-%H%M%S")
 
@@ -174,6 +174,7 @@ if test ==1:
 
     #if sample or uploaded_nii_file or os.path.isdir(dirname):
     if uploaded_nii_file:
+        st.legacy_caching.caching.clear_cache()
         gc.collect()
 #         if sample:
 #             uploaded_nii_file = nib.load('./Data/Liver_extract.nii')
