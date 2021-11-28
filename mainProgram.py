@@ -246,17 +246,18 @@ if choice == "Prototype":
             st.dataframe(df.astype(str))
 
         if sample:
-            option = st.sidebar.radio('Select Organ to segment', ['None', 'Liver'],
+            optionS = st.sidebar.radio('Select Organ to segment', ['None', 'Liver'],
                                       index=0)
-            with st.spinner('Wait for it...'):
-                # load segmentation model
-                # perform segmentation
-                mask = modelDeployment.runDeepSegmentationModel('Liver', img)
-                # plot segmentation mask
+            if optionS == 'Liver':
+                with st.spinner('Wait for it...'):
+                    # load segmentation model
+                    # perform segmentation
+                    mask = modelDeployment.runDeepSegmentationModel('Liver', img)
+                    # plot segmentation mask
 
-                fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
-                fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Liver')
-                fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
+                   fig, ax = funcs_ha_use.plotMask(fig, ax, img, mask, slice_i1, 'AX', 'Liver')
+                   fig1, ax1 = funcs_ha_use.plotMask(fig1, ax1, img, mask, slice_i2, 'CR', 'Liver')
+                   fig2, ax2 = funcs_ha_use.plotMask(fig2, ax2, img, mask, slice_i3, 'SG', 'Liver')
 
         else:
             option = st.sidebar.radio('Select Organ to segment', ['None', 'Liver', 'Pancreas', 'Psoas', 'Kidneys'], index=0)
