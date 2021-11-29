@@ -5,8 +5,8 @@ Published manuscripts:
 -	Asaturyan, H., Villarini, B., Sarao, K., Chow S. K., Afacan, O. and Kurugol, S. Improving Automatic Renal Segmentation in Clinically Normal and Abnormal Paediatric DCE-MRI via Contrast Maximisation and Convolutional Networks for Computing Markers of Kidney Function, Sensor – Special Issue on in Advances in Image Segmentation: Theory and Applications (In Press)
 
 Video demonstration at https://www.youtube.com/watch?v=dlgi_ZboygE
-The cloud-hosted website (no code, downloading, or installation needed) is available at
-https://share.streamlit.io/medicimage/ai_med_seg_app/main/mainProgram.py
+
+The cloud-hosted website (no code, downloading, or installation needed) is available at https://share.streamlit.io/medicimage/ai_med_seg_app/main/mainProgram.py
 
 ## INSTALLATION - For running locally:
 1.	Install Anaconda from instructions [here](https://docs.anaconda.com/anaconda/install/). 
